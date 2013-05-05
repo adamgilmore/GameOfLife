@@ -1,12 +1,13 @@
-﻿function Grid(size) {
+﻿function Grid(width, height) {
     var _me = this;
-    _me.size = size;
+    _me.width = width;
+    _me.height = height;
     _me.buffer = null;
 
     this.create = function () {
-        _me.buffer = new Array(_me.size);
+        _me.buffer = new Array(_me.width);
         $.each(_me.buffer, function (i, value) {
-            _me.buffer[i] = new Array(_me.size);
+            _me.buffer[i] = new Array(_me.height);
         });
     };
 
@@ -30,10 +31,11 @@
     _me.clear();
 }
 
-function Game(size) {
+function Game(width, height) {
     var _me = this;
 
-    _me.size = size;
+    _me.width = width;
+    _me.height = height;
 
     this.randomise = function () {
         _me.grids[_me.currentGridIndex].randomise();
@@ -44,8 +46,8 @@ function Game(size) {
 
         _me.grids[nextGridIndex].clear();
 
-        for (var y = 0; y < _me.size; ++y) {
-            for (var x = 0; x < _me.size; ++x) {
+        for (var x = 0; x < _me.width; ++x) {
+            for (var y = 0; y < _me.height; ++y) {
                 _me.calculateCellGeneration(_me.grids[_me.currentGridIndex], _me.grids[nextGridIndex], x, y);
             }
         }
@@ -60,10 +62,10 @@ function Game(size) {
     this.calculateCellGeneration = function (currentGrid, nextGrid, x, y) {
         var neighbours = 0;
 
-        for (var b = y - 1; b <= y + 1; ++b) 
-            for (var a = x - 1; a <= x + 1; ++a) 
-                if (a >= 0 && a < _me.size && b >= 0 && b < _me.size && !(a == x & b == y)) 
-                    if (currentGrid.buffer[a][b] > 0) 
+        for (var x1 = x - 1; x1 <= x + 1; ++x1)
+            for (var y1 = y - 1; y1 <= y + 1; ++y1)
+                if (x1 >= 0 && x1 < _me.width && y1 >= 0 && y1 < _me.height && !(x1 == x & y1 == y))
+                    if (currentGrid.buffer[x1][y1] > 0)
                         ++neighbours;
 
         if (currentGrid.buffer[x][y] == 0 && neighbours == 3) 
@@ -78,7 +80,7 @@ function Game(size) {
     _me.generation = 0;
 
     _me.grids = new Array(2);
-    _me.grids[0] = new Grid(_me.size);
-    _me.grids[1] = new Grid(_me.size);
+    _me.grids[0] = new Grid(_me.width, _me.height);
+    _me.grids[1] = new Grid(_me.width, _me.height);
 }
 

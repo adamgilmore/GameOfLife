@@ -43,7 +43,7 @@
         }
 
         function createGame() {
-            game = new Game(64);
+            game = new Game(32, 16);
             game.randomise();
         }
 
@@ -62,11 +62,11 @@
         }
 
         function createGridTable() {
-            for (var x = 0; x < game.size; ++x) {
+            for (var y = 0; y < game.height; ++y) {
                 var row = document.createElement("tr");
                 row.className = "row";
                 
-                for (var y = 0; y < game.size; ++y) {
+                for (var x = 0; x < game.width; ++x) {
                     var cell = document.createElement("td")
                     row.appendChild(cell);
                 }
@@ -78,14 +78,14 @@
         function drawGridTable(grid) {
             var rows = $("#gridTable").find("tr.row");
 
-            for (var x = 0; x < game.size; ++x) {
-                for (var y = 0; y < game.size; ++y) {
+            for (var y = 0; y < game.height; ++y) {
+                for (var x = 0; x < game.width; ++x) {
                     if (grid.buffer[x][y] == 0)
-                        rows[x].cells[y].className = "cell-dead";
+                        rows[y].cells[x].className = "cell-dead";
                     else if (grid.buffer[x][y] == 1)
-                        rows[x].cells[y].className = "cell-born";
+                        rows[y].cells[x].className = "cell-born";
                     else 
-                        rows[x].cells[y].className = "cell-alive";
+                        rows[y].cells[x].className = "cell-alive";
                 }
             }
         }
