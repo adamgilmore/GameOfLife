@@ -1,0 +1,23 @@
+﻿body {
+}
+
+#gridTable {
+    border: 1px solid black;
+}
+
+#gridTable td {
+    width: 8px;
+    height: 8px;
+}
+
+.cell-born {
+    background-color: grey;
+}
+
+.cell-alive {
+    background-color: black;
+}
+
+.cell-dead {
+    background-color: white;
+}

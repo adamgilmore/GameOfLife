@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.9.1.js"></script>
+    <script src="Scripts/Logic.js"></script>
+    <link href="Default.css" rel="stylesheet" />
+</head>
+<body>
+    <script>
+        $(window).load(function () {
+
+            // wire up events
+            $("#reset").on("click", function (e) {
+                reset();
+                e.preventDefault();
+            });
+
+            reset();
+
+            createGridTable();
+            
+            process();
+
+            window.setInterval(process, 100);
+        });
+
+        function reset() {
+            initialiseGame();
+        }
+
+        function process() {
+            var grid = calculateGeneration();
+
+            drawGridTable(grid);
+
+            $("#generation").text(generation.toString());
+
+        }
+
+        function createGridTable() {
+            for (var x = 0; x < ArraySize; ++x) {
+                var row = document.createElement("tr");
+                row.className = "row";
+                
+                for (var y = 0; y < ArraySize; ++y) {
+                    var cell = document.createElement("td")
+                    row.appendChild(cell);
+                }
+
+                $("#gridTable").append(row);
+            }
+        }
+
+        function drawGridTable(grid) {
+            var rows = $("#gridTable").find("tr.row");
+
+            for (var x = 0; x < ArraySize; ++x) {
+                for (var y = 0; y < ArraySize; ++y) {
+                    if (grid[x][y] == 0)
+                        rows[x].cells[y].className = "cell-dead";
+                    else if (grid[x][y] == 1)
+                        rows[x].cells[y].className = "cell-born";
+                    else 
+                        rows[x].cells[y].className = "cell-alive";
+                }
+            }
+        }
+
+    </script>
+
+    <div>
+        <div>
+            <input id="reset" type="button" value="Reset" />
+            <span id="generation"></span>
+        </div>
+        <div>
+            <table id="gridTable">
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>
