@@ -14,15 +14,9 @@
         $(window).load(function () {
 
             // wire up events
-            $("#startStop").on("click", function (e) {
-                startStopGame();
-                e.preventDefault();
-            });
-
-            $("#reset").on("click", function (e) {
-                resetGame();
-                e.preventDefault();
-            });
+            $("#startStop").on("click", function (e) { startStopGame(); e.preventDefault(); });
+            $("#randomise").on("click", function (e) { randomiseGame(); e.preventDefault(); });
+            $("#reset").on("click", function (e) { resetGame(); e.preventDefault(); });
 
             createGame();
 
@@ -44,7 +38,12 @@
 
         function createGame() {
             game = new Game(32, 16);
+        }
+
+        function randomiseGame() {
+            createGame();
             game.randomise();
+            drawGame();
         }
 
         function resetGame() {
@@ -53,9 +52,9 @@
         }
 
         function processGame() {
-            var grid = game.calculateGeneration();
+            game.calculateGeneration();
 
-            drawGridTable(grid);
+            drawGame();
 
             $("#generation").text(game.generation.toString());
 
@@ -75,7 +74,9 @@
             }
         }
 
-        function drawGridTable(grid) {
+        function drawGame() {
+            var grid = game.currentGrid();
+
             var rows = $("#gridTable").find("tr.row");
 
             for (var y = 0; y < game.height; ++y) {
@@ -95,6 +96,7 @@
     <div>
         <div>
             <input id="startStop" type="button" value="Start" />
+            <input id="randomise" type="button" value="Randomise" />
             <input id="reset" type="button" value="Reset" />
             <span id="generation"></span>
         </div>

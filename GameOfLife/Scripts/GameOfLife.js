@@ -37,6 +37,13 @@ function Game(width, height) {
     _me.width = width;
     _me.height = height;
 
+    _me.currentGridIndex = 0;
+    _me.generation = 0;
+
+    _me.grids = new Array(2);
+    _me.grids[0] = new Grid(_me.width, _me.height);
+    _me.grids[1] = new Grid(_me.width, _me.height);
+
     this.randomise = function () {
         _me.grids[_me.currentGridIndex].randomise();
     }
@@ -52,11 +59,9 @@ function Game(width, height) {
             }
         }
 
-        ++_me.generation;
-
         _me.currentGridIndex = nextGridIndex;
 
-        return _me.grids[nextGridIndex];
+        ++_me.generation;
     };
 
     this.calculateCellGeneration = function (currentGrid, nextGrid, x, y) {
@@ -76,11 +81,8 @@ function Game(width, height) {
             nextGrid.buffer[x][y] = 0; // dead
     };
 
-    _me.currentGridIndex = 0;
-    _me.generation = 0;
-
-    _me.grids = new Array(2);
-    _me.grids[0] = new Grid(_me.width, _me.height);
-    _me.grids[1] = new Grid(_me.width, _me.height);
+    this.currentGrid = function () {
+        return _me.grids[_me.currentGridIndex];
+    }
 }
 
