@@ -59,7 +59,7 @@
   <ItemGroup>
     <Content Include="Default.css" />
     <Content Include="Default.html" />
-    <Content Include="Scripts\Logic.js" />
+    <Content Include="Scripts\GameOfLife.js" />
     <Content Include="packages.config" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />

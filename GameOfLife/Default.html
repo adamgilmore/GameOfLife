@@ -3,47 +3,49 @@
 <head>
     <title></title>
     <script src="Scripts/jquery-1.9.1.js"></script>
-    <script src="Scripts/Logic.js"></script>
+    <script src="Scripts/GameOfLife.js"></script>
     <link href="Default.css" rel="stylesheet" />
 </head>
 <body>
     <script>
+        var game = null;
+
         $(window).load(function () {
 
             // wire up events
             $("#reset").on("click", function (e) {
-                reset();
+                createGame();
                 e.preventDefault();
             });
 
-            reset();
+            createGame();
 
             createGridTable();
             
-            process();
+            processGame();
 
-            window.setInterval(process, 100);
+            window.setInterval(processGame, 100);
         });
 
-        function reset() {
-            initialiseGame();
+        function createGame() {
+            game = new Game(32);
         }
 
-        function process() {
-            var grid = calculateGeneration();
+        function processGame() {
+            var grid = game.calculateGeneration();
 
             drawGridTable(grid);
 
-            $("#generation").text(generation.toString());
+            $("#generation").text(game.generation.toString());
 
         }
 
         function createGridTable() {
-            for (var x = 0; x < ArraySize; ++x) {
+            for (var x = 0; x < game.size; ++x) {
                 var row = document.createElement("tr");
                 row.className = "row";
                 
-                for (var y = 0; y < ArraySize; ++y) {
+                for (var y = 0; y < game.size; ++y) {
                     var cell = document.createElement("td")
                     row.appendChild(cell);
                 }
@@ -55,8 +57,8 @@
         function drawGridTable(grid) {
             var rows = $("#gridTable").find("tr.row");
 
-            for (var x = 0; x < ArraySize; ++x) {
-                for (var y = 0; y < ArraySize; ++y) {
+            for (var x = 0; x < game.size; ++x) {
+                for (var y = 0; y < game.size; ++y) {
                     if (grid[x][y] == 0)
                         rows[x].cells[y].className = "cell-dead";
                     else if (grid[x][y] == 1)
