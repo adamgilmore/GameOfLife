@@ -27,6 +27,22 @@
         });
     };
 
+    this.createGlider = function (x, y) {
+        _me.buffer[x + 1][y] = 1;
+        _me.buffer[x + 2][y + 1] = 1;
+        _me.buffer[x][y + 2] = 1;
+        _me.buffer[x + 1][y + 2] = 1;
+        _me.buffer[x + 2][y + 2] = 1;
+    }
+
+    this.createRPentimino = function (x, y) {
+        _me.buffer[x + 1][y] = 1;
+        _me.buffer[x + 2][y] = 1;
+        _me.buffer[x][y + 1] = 1;
+        _me.buffer[x + 1][y + 1] = 1;
+        _me.buffer[x + 1][y + 2] = 1;
+    }
+
     _me.create();
     _me.clear();
 }
@@ -68,10 +84,22 @@ function Game(width, height) {
         var neighbours = 0;
 
         for (var x1 = x - 1; x1 <= x + 1; ++x1)
-            for (var y1 = y - 1; y1 <= y + 1; ++y1)
-                if (x1 >= 0 && x1 < _me.width && y1 >= 0 && y1 < _me.height && !(x1 == x & y1 == y))
-                    if (currentGrid.buffer[x1][y1] > 0)
+            for (var y1 = y - 1; y1 <= y + 1; ++y1) {
+
+                var x2, y2;
+
+                if (x1 < 0) x2 = _me.width + x1;
+                else if (x1 > _me.width - 1) x2 = x1 - _me.width;
+                else x2 = x1;
+
+                if (y1 < 0) y2 = _me.height + y1;
+                else if (y1 > _me.height - 1) y2 = y1 - _me.height;
+                else y2 = y1;
+                
+                if (!(x2 == x & y2 == y))
+                    if (currentGrid.buffer[x2][y2] > 0)
                         ++neighbours;
+            }
 
         if (currentGrid.buffer[x][y] == 0 && neighbours == 3) 
             nextGrid.buffer[x][y] = 1; // birth

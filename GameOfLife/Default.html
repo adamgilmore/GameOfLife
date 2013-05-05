@@ -16,6 +16,8 @@
             // wire up events
             $("#startStop").on("click", function (e) { startStopGame(); e.preventDefault(); });
             $("#randomise").on("click", function (e) { randomiseGame(); e.preventDefault(); });
+            $("#glider").on("click", function (e) { addGlider(); e.preventDefault(); });
+            $("#rp").on("click", function (e) { addRP(); e.preventDefault(); });
             $("#reset").on("click", function (e) { resetGame(); e.preventDefault(); });
 
             createGame();
@@ -41,8 +43,17 @@
         }
 
         function randomiseGame() {
-            createGame();
             game.randomise();
+            drawGame();
+        }
+
+        function addGlider() {
+            game.currentGrid().createGlider(5, 5);
+            drawGame();
+        }
+
+        function addRP() {
+            game.currentGrid().createRPentimino(5, 5);
             drawGame();
         }
 
@@ -97,6 +108,8 @@
         <div>
             <input id="startStop" type="button" value="Start" />
             <input id="randomise" type="button" value="Randomise" />
+            <input id="glider" type="button" value="Add Glider" />
+            <input id="rp" type="button" value="Add RP" />
             <input id="reset" type="button" value="Reset" />
             <span id="generation"></span>
         </div>
