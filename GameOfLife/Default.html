@@ -9,12 +9,18 @@
 <body>
     <script>
         var game = null;
+        var timerId;
 
         $(window).load(function () {
 
             // wire up events
+            $("#startStop").on("click", function (e) {
+                startStopGame();
+                e.preventDefault();
+            });
+
             $("#reset").on("click", function (e) {
-                createGame();
+                resetGame();
                 e.preventDefault();
             });
 
@@ -23,12 +29,27 @@
             createGridTable();
             
             processGame();
-
-            window.setInterval(processGame, 100);
         });
+
+        function startStopGame() {
+            if ($("#startStop").val() == "Start") {
+                $("#startStop").val("Stop");
+                timerId = window.setInterval(processGame, 100);
+            } 
+            else {
+                $("#startStop").val("Start");
+                window.clearInterval(timerId);
+            }
+        }
 
         function createGame() {
             game = new Game(64);
+            game.randomise();
+        }
+
+        function resetGame() {
+            createGame();
+            processGame();
         }
 
         function processGame() {
@@ -73,6 +94,7 @@
 
     <div>
         <div>
+            <input id="startStop" type="button" value="Start" />
             <input id="reset" type="button" value="Reset" />
             <span id="generation"></span>
         </div>

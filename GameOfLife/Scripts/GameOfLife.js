@@ -35,6 +35,10 @@ function Game(size) {
 
     _me.size = size;
 
+    this.randomise = function () {
+        _me.grids[_me.currentGridIndex].randomise();
+    }
+
     this.calculateGeneration = function () {
         var nextGridIndex = (_me.currentGridIndex == 0) ? 1 : 0;
 
@@ -62,15 +66,12 @@ function Game(size) {
                     if (currentGrid.buffer[a][b] > 0) 
                         ++neighbours;
 
-        if (currentGrid.buffer[x][y] == 0 && neighbours == 3) {
-            nextGrid.buffer[x][y] = 1;
-        }
-        else if ((currentGrid.buffer[x][y] == 1 || currentGrid.buffer[x][y] == 2) && (neighbours == 2 || neighbours == 3)) {
-            nextGrid.buffer[x][y] = 2;
-        }
-        else {
-            nextGrid.buffer[x][y] = 0;
-        }
+        if (currentGrid.buffer[x][y] == 0 && neighbours == 3) 
+            nextGrid.buffer[x][y] = 1; // birth
+        else if ((currentGrid.buffer[x][y] == 1 || currentGrid.buffer[x][y] == 2) && (neighbours == 2 || neighbours == 3)) 
+            nextGrid.buffer[x][y] = 2; // alive
+        else 
+            nextGrid.buffer[x][y] = 0; // dead
     };
 
     _me.currentGridIndex = 0;
@@ -79,7 +80,5 @@ function Game(size) {
     _me.grids = new Array(2);
     _me.grids[0] = new Grid(_me.size);
     _me.grids[1] = new Grid(_me.size);
-
-    _me.grids[0].randomise();
 }
 
