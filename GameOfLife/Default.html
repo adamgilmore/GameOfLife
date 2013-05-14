@@ -19,6 +19,7 @@
             $("#glider").on("click", function (e) { addGlider(); e.preventDefault(); });
             $("#rp").on("click", function (e) { addRP(); e.preventDefault(); });
             $("#reset").on("click", function (e) { resetGame(); e.preventDefault(); });
+            $("#gridTable").on("click", "td", function (e) { cellSelect(e); });
 
             createGame();
 
@@ -60,6 +61,10 @@
         function resetGame() {
             createGame();
             processGame();
+        }
+
+        function cellSelect(e) {
+            e.target.className = (e.target.className == "cell-selected") ? "cell-unselected" : "cell-selected"
         }
 
         function processGame() {

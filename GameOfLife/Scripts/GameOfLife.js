@@ -5,26 +5,21 @@
     _me.buffer = null;
 
     this.create = function () {
-        _me.buffer = new Array(_me.width);
-        $.each(_me.buffer, function (i, value) {
-            _me.buffer[i] = new Array(_me.height);
-        });
+        _me.buffer = [_me.width];
+        for (var x = 0; x < _me.buffer.length; ++x)
+            _me.buffer[x] = [_me.height];
     };
 
     this.clear = function () {
-        $.each(_me.buffer, function (x, value) {
-            $.each(_me.buffer[x], function (y, value) {
+        for (var x = 0; x < _me.buffer.length; ++x)
+            for (var y = 0; y < _me.buffer[x].length; ++y)
                 _me.buffer[x][y] = 0;
-            });
-        });
     };
 
     this.randomise = function () {
-        $.each(_me.buffer, function (x, value) {
-            $.each(_me.buffer[x], function (y, value) {
+        for (var x = 0; x < _me.buffer.length; ++x)
+            for (var y = 0; y < _me.buffer[x].length; ++y)
                 _me.buffer[x][y] = Math.round(Math.random());
-            });
-        });
     };
 
     this.createGlider = function (x, y) {
@@ -56,7 +51,7 @@ function Game(width, height) {
     _me.currentGridIndex = 0;
     _me.generation = 0;
 
-    _me.grids = new Array(2);
+    _me.grids = [2];
     _me.grids[0] = new Grid(_me.width, _me.height);
     _me.grids[1] = new Grid(_me.width, _me.height);
 

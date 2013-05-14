@@ -10,6 +10,18 @@
     height: 8px;
 }
 
+#gridTable td:hover {
+    background: red;
+}
+
+.cell-selected {
+    background-color: maroon;
+}
+
+.cell-unselected {
+    background-color: white;
+}
+
 .cell-born {
     background-color: grey;
 }
