@@ -5,20 +5,20 @@
     _me.buffer = null;
 
     this.create = function () {
-        _me.buffer = [_me.width];
-        for (var x = 0; x < _me.buffer.length; ++x)
-            _me.buffer[x] = [_me.height];
+        _me.buffer = [];
+        for (var x = 0; x < _me.width; ++x)
+            _me.buffer[x] = [];
     };
 
     this.clear = function () {
-        for (var x = 0; x < _me.buffer.length; ++x)
-            for (var y = 0; y < _me.buffer[x].length; ++y)
+        for (var x = 0; x < _me.width; ++x)
+            for (var y = 0; y < _me.height; ++y)
                 _me.buffer[x][y] = 0;
     };
 
     this.randomise = function () {
-        for (var x = 0; x < _me.buffer.length; ++x)
-            for (var y = 0; y < _me.buffer[x].length; ++y)
+        for (var x = 0; x < _me.width; ++x)
+            for (var y = 0; y < _me.height; ++y)
                 _me.buffer[x][y] = Math.round(Math.random());
     };
 
@@ -51,7 +51,7 @@ function Game(width, height) {
     _me.currentGridIndex = 0;
     _me.generation = 0;
 
-    _me.grids = [2];
+    _me.grids = [];
     _me.grids[0] = new Grid(_me.width, _me.height);
     _me.grids[1] = new Grid(_me.width, _me.height);
 
